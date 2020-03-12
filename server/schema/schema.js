@@ -79,7 +79,7 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     users: {
       type: new GraphQLList(UserType),
-      resolve(parent, args){
+      resolve(parent, args) {
         return User.find();
       }
     },
@@ -97,7 +97,7 @@ const RootQuery = new GraphQLObjectType({
 
     hobbies: {
       type: new GraphQLList(HobbyType),
-      resolve(parent, args){
+      resolve(parent, args) {
         return Hobby.find();
       }
     },
@@ -112,7 +112,7 @@ const RootQuery = new GraphQLObjectType({
 
     posts: {
       type: new GraphQLList(PostType),
-      resolve(parent, args){
+      resolve(parent, args) {
         return Post.find();
       }
     },
@@ -145,8 +145,31 @@ const Mutation = new GraphQLObjectType({
           profession: args.profession
         });
         // save to db
-        user.save();
-        return user;
+        return user.save();
+      }
+    },
+
+    updateUser: {
+      type: UserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        age: { type: GraphQLInt },
+        profession: { type: GraphQLString }
+      },
+      resolve(parent, args) {
+        let updatedUser = User.findByIdAndUpdate(
+          args.id,
+          {
+            $set: {
+              name: args.name,
+              age: args.age,
+              profession: args.profession
+            }
+          },
+          { new: true }
+        );
+        return updatedUser;
       }
     },
 
@@ -167,6 +190,26 @@ const Mutation = new GraphQLObjectType({
       }
     },
 
+    updatePost: {
+      type: PostType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        comment: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve(parent, args) {
+        let updatedPost = Post.findByIdAndUpdate(
+          args.id,
+          {
+            $set: {
+              comment: args.comment
+            }
+          },
+          { new: true }
+        );
+        return updatedPost;
+      }
+    },
+
     createHobby: {
       type: HobbyType,
       args: {
@@ -184,7 +227,29 @@ const Mutation = new GraphQLObjectType({
         hobby.save();
         return hobby;
       }
-    }
+    },
+
+    updateHobby: {
+      type: HobbyType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        title: { type: GraphQLString },
+        description: { type: GraphQLString }
+      },
+      resolve(parent, args) {
+        let updatedHobby = Hobby.findByIdAndUpdate(
+          args.id,
+          {
+            $set: {
+              title: args.title,
+              description: args.description
+            }
+          },
+          { new: true }
+        );
+        return updatedHobby;
+      }
+    },
   }
 })
 
