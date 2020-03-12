@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const schema = require('./schema/schema');
 const cors = require('cors');
+const port  = process.env.PORT || 4000;
 const app = express();
 
 mongoose.connect('mongodb+srv://andrew:Andrew123@graphql-cluster-bizau.mongodb.net/graphql-demo?retryWrites=true&w=majority',
@@ -19,6 +20,6 @@ app.use('/graphql', graphqlHTTP({
   schema
 }))
 
-app.listen(4000, () => {
-  console.log('Listening on port 4000');
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 })
