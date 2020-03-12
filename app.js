@@ -11,7 +11,7 @@ mongoose.connect('mongodb+srv://andrew:Andrew123@graphql-cluster-bizau.mongodb.n
  { useNewUrlParser: true, useUnifiedTopology: true });
 
 mongoose.connection.once('open', () => {
-  console.log('Mongo db is connected');
+  console.log('Mongo-DB is Connected!!');
 });
 
 app.use(cors());
