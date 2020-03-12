@@ -1,5 +1,4 @@
 const graphql = require('graphql');
-var _ = require('lodash');
 const User = require('../model/user');
 const Hobby = require('../model/hobby');
 const Post = require('../model/post');

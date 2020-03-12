@@ -18,8 +18,8 @@ app.use(cors());
 app.use('/graphql', graphqlHTTP({
   graphiql: true,
   schema
-}))
+}));
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
-})
+});
